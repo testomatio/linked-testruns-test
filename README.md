@@ -1,25 +1,25 @@
 # Linked Testruns Test Project
 
-Minimal Playwright project for verifying [#8375 — Linked Testruns: Write message for automated testruns without links](https://github.com/testomatio/testomatio/issues/8375).
+Minimal Playwright project for verifying Linked Testruns message behavior.
 
-## Structure
-
-- `tests/linked.spec.ts` — 2 tests WITH `@T` tags (linked to manual test cases)
-- `tests/unlinked.spec.ts` — 2 tests WITHOUT `@T` tags
-- `tests/only-unlinked.spec.ts` — 2 tests WITHOUT `@T` tags (edge case: no links at all)
-
-## Usage
+## Setup
 
 ```bash
 npm install
+```
 
-# Report all tests (linked + unlinked) into an existing Manual Run
-TESTOMATIO=<api_key> TESTOMATIO_RUN=<run_uid> TESTOMATIO_CREATE=1 \
+## Report into a Manual Run
+
+Create a Manual Run in Testomat.io UI first, then report tests into it. Replace `TESTOMATIO` with your project's reporter API key and `TESTOMATIO_RUN` with the run UID.
+
+```bash
+# Linked + unlinked tests
+TESTOMATIO=tstmt_xxx TESTOMATIO_RUN=<run_uid> TESTOMATIO_CREATE=1 \
 npx playwright test tests/linked.spec.ts tests/unlinked.spec.ts
 
-# Report only unlinked tests (edge case)
-TESTOMATIO=<api_key> TESTOMATIO_RUN=<run_uid> TESTOMATIO_CREATE=1 \
+# Only unlinked tests (edge case)
+TESTOMATIO=tstmt_xxx TESTOMATIO_RUN=<run_uid> TESTOMATIO_CREATE=1 \
 npx playwright test tests/only-unlinked.spec.ts tests/unlinked.spec.ts
 ```
 
-**Note:** `@T` tag IDs in `linked.spec.ts` must match real test IDs in the target project. Update them before running against a different project.
+`@T` tag IDs in `linked.spec.ts` must match real test IDs in the target project.
